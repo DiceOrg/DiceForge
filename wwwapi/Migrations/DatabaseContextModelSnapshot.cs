@@ -117,7 +117,7 @@ namespace wwwapi.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("intelligence_id");
 
-                    b.Property<int>("StrengthID")
+                    b.Property<int>("StrengthId")
                         .HasColumnType("integer")
                         .HasColumnName("strength_id");
 
@@ -138,7 +138,7 @@ namespace wwwapi.Migrations
 
                     b.HasIndex("IntelligenceId");
 
-                    b.HasIndex("StrengthID");
+                    b.HasIndex("StrengthId");
 
                     b.HasIndex("WisdomId");
 
@@ -153,7 +153,7 @@ namespace wwwapi.Migrations
                             ConstitutionId = 3,
                             DexterityId = 2,
                             IntelligenceId = 4,
-                            StrengthID = 1,
+                            StrengthId = 1,
                             WisdomId = 5
                         },
                         new
@@ -164,7 +164,7 @@ namespace wwwapi.Migrations
                             ConstitutionId = 9,
                             DexterityId = 8,
                             IntelligenceId = 10,
-                            StrengthID = 7,
+                            StrengthId = 7,
                             WisdomId = 11
                         });
                 });
@@ -274,6 +274,10 @@ namespace wwwapi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("characters");
@@ -281,11 +285,13 @@ namespace wwwapi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1
+                            Id = 1,
+                            Name = "Steve"
                         },
                         new
                         {
-                            Id = 2
+                            Id = 2,
+                            Name = "John"
                         });
                 });
 
@@ -297,6 +303,10 @@ namespace wwwapi.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Attribute")
+                        .HasColumnType("integer")
+                        .HasColumnName("attribute");
 
                     b.Property<bool>("Exp")
                         .HasColumnType("boolean")
@@ -314,216 +324,252 @@ namespace wwwapi.Migrations
                         new
                         {
                             Id = 1,
+                            Attribute = 4,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 2,
+                            Attribute = 3,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 3,
+                            Attribute = 0,
                             Exp = false,
                             Prof = true
                         },
                         new
                         {
                             Id = 4,
+                            Attribute = 5,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 5,
+                            Attribute = 3,
                             Exp = true,
                             Prof = false
                         },
                         new
                         {
                             Id = 6,
+                            Attribute = 4,
                             Exp = false,
                             Prof = true
                         },
                         new
                         {
                             Id = 7,
+                            Attribute = 5,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 8,
+                            Attribute = 3,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 9,
+                            Attribute = 4,
                             Exp = false,
                             Prof = true
                         },
                         new
                         {
                             Id = 10,
+                            Attribute = 3,
                             Exp = true,
                             Prof = false
                         },
                         new
                         {
                             Id = 11,
+                            Attribute = 4,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 12,
+                            Attribute = 5,
                             Exp = false,
                             Prof = true
                         },
                         new
                         {
                             Id = 13,
+                            Attribute = 5,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 14,
+                            Attribute = 3,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 15,
+                            Attribute = 1,
                             Exp = true,
                             Prof = true
                         },
                         new
                         {
                             Id = 16,
+                            Attribute = 1,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 17,
+                            Attribute = 4,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 18,
+                            Attribute = 1,
                             Exp = false,
                             Prof = true
                         },
                         new
                         {
                             Id = 19,
+                            Attribute = 4,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 20,
+                            Attribute = 3,
                             Exp = true,
                             Prof = false
                         },
                         new
                         {
                             Id = 21,
+                            Attribute = 0,
                             Exp = false,
                             Prof = true
                         },
                         new
                         {
                             Id = 22,
+                            Attribute = 5,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 23,
+                            Attribute = 3,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 24,
+                            Attribute = 4,
                             Exp = false,
                             Prof = true
                         },
                         new
                         {
                             Id = 25,
+                            Attribute = 5,
                             Exp = true,
                             Prof = false
                         },
                         new
                         {
                             Id = 26,
+                            Attribute = 3,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 27,
+                            Attribute = 4,
                             Exp = false,
                             Prof = true
                         },
                         new
                         {
                             Id = 28,
+                            Attribute = 3,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 29,
+                            Attribute = 4,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 30,
+                            Attribute = 5,
                             Exp = true,
                             Prof = true
                         },
                         new
                         {
                             Id = 31,
+                            Attribute = 5,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 32,
+                            Attribute = 3,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 33,
+                            Attribute = 1,
                             Exp = false,
                             Prof = true
                         },
                         new
                         {
                             Id = 34,
+                            Attribute = 1,
                             Exp = false,
                             Prof = false
                         },
                         new
                         {
                             Id = 35,
+                            Attribute = 4,
                             Exp = true,
                             Prof = false
                         },
                         new
                         {
                             Id = 36,
+                            Attribute = 1,
                             Exp = false,
                             Prof = true
                         });
@@ -560,7 +606,7 @@ namespace wwwapi.Migrations
 
                     b.Property<int>("DeceptionId")
                         .HasColumnType("integer")
-                        .HasColumnName("deception:id");
+                        .HasColumnName("deception_id");
 
                     b.Property<int>("HistoryId")
                         .HasColumnType("integer")
@@ -754,15 +800,15 @@ namespace wwwapi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Age")
+                    b.Property<int?>("Age")
                         .HasColumnType("integer")
                         .HasColumnName("age");
 
-                    b.Property<int>("Alignment")
+                    b.Property<int?>("Alignment")
                         .HasColumnType("integer")
                         .HasColumnName("alignment");
 
-                    b.Property<int>("Background")
+                    b.Property<int?>("Background")
                         .HasColumnType("integer")
                         .HasColumnName("background");
 
@@ -770,7 +816,7 @@ namespace wwwapi.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("character_id");
 
-                    b.Property<int>("Class_")
+                    b.Property<int?>("Class_")
                         .HasColumnType("integer")
                         .HasColumnName("class");
 
@@ -986,7 +1032,7 @@ namespace wwwapi.Migrations
 
                     b.HasOne("wwwapi.Models.Ability", "Strength")
                         .WithMany()
-                        .HasForeignKey("StrengthID")
+                        .HasForeignKey("StrengthId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
