@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using wwwapi.Models;
+using wwwapi.Models.Users;
 
 namespace wwwapi.Data
 {
-    public class DatabaseContext : DbContext
+    public class DatabaseContext : IdentityUserContext<User>
     {
 
         private string _connectionString;
@@ -56,6 +58,8 @@ namespace wwwapi.Data
             Seeder.SeedStyle(modelBuilder);
             Seeder.SeedSpeed(modelBuilder);
             Seeder.SeedSkills(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
