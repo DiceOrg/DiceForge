@@ -9,29 +9,29 @@ namespace wwwapi.Models
         [Column("id")]
         public int Id { get; set; }
         [Column("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = "";
         [Column("description")]
-        public string Description { get; set; }
+        public string Description { get; set; } = "";
         [Column("age")]
-        public int Age { get; set; }
+        public int? Age { get; set; } = null;
         [Column("height")]
-        public string Height { get; set; }
+        public string Height { get; set; } = "";
         [Column("width")]
-        public string Width { get; set; }
+        public string Width { get; set; } = "";
         [Column("eyes")]
-        public string Eyes { get; set; }
+        public string Eyes { get; set; } = "";
         [Column("hair")]
-        public string Hair { get; set; }
+        public string Hair { get; set; } = "";
         [Column("skin")]
-        public string Skin { get; set; }
+        public string Skin { get; set; } = "";
         [Column("race")]
-        public string Race { get; set; }
+        public string Race { get; set; } = "";
         [Column("class")]
-        public Class_ Class_ { get; set; }
+        public Class_? Class_ { get; set; } = null;
         [Column("alignment")]
-        public Alignment Alignment { get; set; }
+        public Alignment? Alignment { get; set; } = null;
         [Column("background")]
-        public Background Background { get; set; }
+        public Background? Background { get; set; } = null;
         [Column("character_id"), ForeignKey("Character"), JsonIgnore]
         public int CharacterId { get; set; }
     }

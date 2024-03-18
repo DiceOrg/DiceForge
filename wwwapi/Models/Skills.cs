@@ -23,7 +23,7 @@ namespace wwwapi.Models
         public int AthleticsId { get; set; }
         [Column("athletics")]
         public Skill Athletics { get; set; }
-        [Column("deception:id"), ForeignKey("Skill"), JsonIgnore]
+        [Column("deception_id"), ForeignKey("Skill"), JsonIgnore]
         public int DeceptionId { get; set; }
         [Column("deception")]
         public Skill Deception { get; set; }

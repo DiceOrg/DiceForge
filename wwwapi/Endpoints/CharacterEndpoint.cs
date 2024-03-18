@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
+using wwwapi.Helpers;
 using wwwapi.Models;
 using wwwapi.Repository;
 
@@ -13,6 +15,8 @@ namespace wwwapi.Endpoints
 
             characterGroup.MapGet("", GetCharacters);
             characterGroup.MapGet("/styles/{characterId}", GetStyle);
+            characterGroup.MapGet("/{id}", GetCharacter);
+            characterGroup.MapPost("/", CreateCharacter);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -34,6 +38,31 @@ namespace wwwapi.Endpoints
             return TypedResults.Ok(style);
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public static async Task<IResult> GetCharacter(IRepository<Character> repository, int id)
+        {
+            Character character = await repository.Get(id);
+            if (character == null)
+                return TypedResults.NotFound("No characters found");
+
+            return TypedResults.Ok(character);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public static async Task<IResult> CreateCharacter(IRepository<Character> repository, String name,
+            IRepository<Abilities> abiltiesRepository, IRepository<Ability> abilityRepository,
+            IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
+            IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository,
+            IRepository<Style> styleRepository)
+        {
+            Character character = await CharacterHelper.toCharacter(name, abiltiesRepository, abilityRepository,
+            characterRepository, skillRepository, skillsRepository, speedRepository,
+            styleRepository);
+
+            return TypedResults.Ok(character);
+        }
 
     }
 }

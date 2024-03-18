@@ -8,8 +8,8 @@ namespace wwwapi.Models
         [Column("id")]
         public int Id { get; set; }
         [Column("value")]
-        public int Value { get; set; }
+        public int Value { get; set; } = 8;
         [Column("prof")]
-        public bool Prof { get; set; }
+        public bool Prof { get; set; } = false;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
+using wwwapi.Helpers;
 using wwwapi.Models;
 
 namespace wwwapi.Data
@@ -12,10 +13,12 @@ namespace wwwapi.Data
             modelBuilder.Entity<Character>().HasData(new List<Character>{
                 new Character()
                 {
+                    Name = "Steve",
                     Id = 1
                 }, 
                 new Character()
                 {
+                    Name = "John",
                     Id = 2
                 }
             });
@@ -32,7 +35,7 @@ namespace wwwapi.Data
                 abilities.Add(new Abilities()
                 {
                     Id = i,
-                    StrengthID = numAbilities++,
+                    StrengthId = numAbilities++,
                     DexterityId = numAbilities++,
                     ConstitutionId = numAbilities++,
                     IntelligenceId = numAbilities++,
@@ -139,13 +142,16 @@ namespace wwwapi.Data
 
             List<Skill> skillList = new List<Skill>();
 
+            List<AbilitiesEnum> abilities = CharacterHelper.SkillToAbility.Values.ToList();
+
             for (int i = 1; i < numSkills; i++)
             {
                 skillList.Add(new Skill()
                 {
                     Id = i,
                     Prof = i % 3 == 0,
-                    Exp = i % 5 == 0
+                    Exp = i % 5 == 0, 
+                    Attribute = abilities[i % abilities.Count]
                 });
             }
 

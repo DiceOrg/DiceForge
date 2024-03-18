@@ -9,7 +9,7 @@ namespace wwwapi.Models
         [Column("id")]
         public int Id { get; set; }
         [Column("strength_id"), ForeignKey("Ability"), JsonIgnore]
-        public int StrengthID { get; set; }
+        public int StrengthId { get; set; }
         [Column("strength")]
         public Ability Strength { get; set; }
         [Column("dexterity_id"), ForeignKey("Ability"), JsonIgnore]
