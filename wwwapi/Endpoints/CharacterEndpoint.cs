@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
 using wwwapi.Helpers;
 using wwwapi.Models;
@@ -19,6 +20,7 @@ namespace wwwapi.Endpoints
             characterGroup.MapPost("/", CreateCharacter);
         }
 
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public static async Task<IResult> GetCharacters(IRepository<Character> repository)
         {
