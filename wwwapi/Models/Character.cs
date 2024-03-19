@@ -7,7 +7,7 @@ namespace wwwapi.Models
     {
         [Column("id")]
         public int Id { get; set; }
-        public String Name { get; set; }
+        public string Name { get; set; }
         public Style Style { get; set; }
         public Abilities Abilities { get; set; }
         public Skills Skills { get; set; }
