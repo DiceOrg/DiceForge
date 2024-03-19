@@ -52,12 +52,12 @@ namespace wwwapi.Data
             modelBuilder.Entity<Skills>().Navigation(s => s.Stealth).AutoInclude();
             modelBuilder.Entity<Skills>().Navigation(s => s.Survival).AutoInclude();
 
-            // Seed info
-            Seeder.SeedCharacters(modelBuilder);
-            Seeder.SeedAbilities(modelBuilder);
-            Seeder.SeedStyle(modelBuilder);
-            Seeder.SeedSpeed(modelBuilder);
-            Seeder.SeedSkills(modelBuilder);
+            //// Seed info
+            //Seeder.SeedCharacters(modelBuilder);
+            //Seeder.SeedAbilities(modelBuilder);
+            //Seeder.SeedStyle(modelBuilder);
+            //Seeder.SeedSpeed(modelBuilder);
+            //Seeder.SeedSkills(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }

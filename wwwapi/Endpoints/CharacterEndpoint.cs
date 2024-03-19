@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Xml.Linq;
 using wwwapi.Helpers;
 using wwwapi.Models;
+using wwwapi.Models.Users;
 using wwwapi.Repository;
 
 namespace wwwapi.Endpoints
@@ -15,7 +17,6 @@ namespace wwwapi.Endpoints
             var characterGroup = app.MapGroup("character");
 
             characterGroup.MapGet("", GetCharacters);
-            characterGroup.MapGet("/styles/{characterId}", GetStyle);
             characterGroup.MapGet("/{id}", GetCharacter);
             characterGroup.MapPost("/", CreateCharacter);
 
@@ -28,11 +29,11 @@ namespace wwwapi.Endpoints
 
         }
 
-        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public static async Task<IResult> GetCharacters(IRepository<Character> repository)
+        public static async Task<IResult> GetCharacters(IRepository<Character> repository, ClaimsPrincipal user)
         {
-            IEnumerable<Character> characters = await repository.Get();
+            string id = user.UserId();
+            IQueryable<Character> characters = repository.GetByCondition(u => u.UserId == id);
             if ( characters == null) 
                 return TypedResults.NotFound("No characters found"); 
 
@@ -41,20 +42,14 @@ namespace wwwapi.Endpoints
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public static IResult GetStyle(IRepository<Style> repository, int id)
-        {
-            IQueryable<Style> style = repository.GetByCondition(x => x.CharacterId == id);
-            if (style == null) return TypedResults.NotFound("Ability scores not found");
-            return TypedResults.Ok(style);
-        }
-
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public static async Task<IResult> GetCharacter(IRepository<Character> repository, int id)
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public static async Task<IResult> GetCharacter(IRepository<Character> repository, int id, ClaimsPrincipal user)
         {
             Character character = await repository.Get(id);
             if (character == null)
                 return TypedResults.NotFound("No characters found");
+            if (user.UserId() != character.UserId)
+                return TypedResults.Unauthorized();
 
             return TypedResults.Ok(character);
         }
@@ -65,11 +60,13 @@ namespace wwwapi.Endpoints
             IRepository<Abilities> abiltiesRepository, IRepository<Ability> abilityRepository,
             IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
             IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository,
-            IRepository<Style> styleRepository)
+            IRepository<Style> styleRepository, ClaimsPrincipal user)
         {
+            string id = user.UserId();
             Character character = await CharacterHelper.toCharacter(name, abiltiesRepository, abilityRepository,
             characterRepository, skillRepository, skillsRepository, speedRepository,
-            styleRepository);
+            styleRepository, id);
+            
 
             return TypedResults.Ok(character);
         }
