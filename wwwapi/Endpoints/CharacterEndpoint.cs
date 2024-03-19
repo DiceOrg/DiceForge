@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Xml.Linq;
 using wwwapi.Helpers;
 using wwwapi.Models;
-using wwwapi.Models.Users;
 using wwwapi.Repository;
 
 namespace wwwapi.Endpoints
@@ -43,13 +40,15 @@ namespace wwwapi.Endpoints
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public static async Task<IResult> GetCharacter(IRepository<Character> repository, int id, ClaimsPrincipal user)
+        public static async Task<IResult> GetCharacter(IRepository<Character> repository, int id
+            //ClaimsPrincipal user
+            )
         {
             Character character = await repository.Get(id);
             if (character == null)
                 return TypedResults.NotFound("No characters found");
-            if (user.UserId() != character.UserId)
-                return TypedResults.Unauthorized();
+            /*if (user.UserId() != character.UserId)
+                return TypedResults.Unauthorized();*/
 
             return TypedResults.Ok(character);
         }
