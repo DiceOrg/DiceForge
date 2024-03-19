@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using wwwapi.Models;
+using wwwapi.Models.Users;
 using wwwapi.Repository;
 
 namespace wwwapi.Helpers
@@ -12,12 +13,13 @@ namespace wwwapi.Helpers
             IRepository<Abilities> abiltiesRepository, IRepository<Ability> abilityRepository, 
             IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
             IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository, 
-            IRepository<Style> styleRepository)
+            IRepository<Style> styleRepository, string userId)
         {
 
             Character character = await characterRepository.Create(new Character()
             {
                 Name = name,
+                UserId = userId
             });
 
             await CharacterHelper.toAbilities(abiltiesRepository, abilityRepository, character.Id);

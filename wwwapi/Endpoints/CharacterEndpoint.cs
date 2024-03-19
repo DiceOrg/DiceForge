@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using System.Xml.Linq;
 using wwwapi.Helpers;
 using wwwapi.Models;
@@ -57,11 +58,13 @@ namespace wwwapi.Endpoints
             IRepository<Abilities> abiltiesRepository, IRepository<Ability> abilityRepository,
             IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
             IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository,
-            IRepository<Style> styleRepository)
+            IRepository<Style> styleRepository, ClaimsPrincipal user)
         {
+            string id = user.UserId();
             Character character = await CharacterHelper.toCharacter(name, abiltiesRepository, abilityRepository,
             characterRepository, skillRepository, skillsRepository, speedRepository,
-            styleRepository);
+            styleRepository, id);
+            
 
             return TypedResults.Ok(character);
         }

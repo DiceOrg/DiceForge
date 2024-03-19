@@ -143,30 +143,6 @@ namespace wwwapi.Migrations
                     b.HasIndex("WisdomId");
 
                     b.ToTable("abilities");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CharacterId = 1,
-                            CharismaId = 6,
-                            ConstitutionId = 3,
-                            DexterityId = 2,
-                            IntelligenceId = 4,
-                            StrengthId = 1,
-                            WisdomId = 5
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CharacterId = 2,
-                            CharismaId = 12,
-                            ConstitutionId = 9,
-                            DexterityId = 8,
-                            IntelligenceId = 10,
-                            StrengthId = 7,
-                            WisdomId = 11
-                        });
                 });
 
             modelBuilder.Entity("wwwapi.Models.Ability", b =>
@@ -189,80 +165,6 @@ namespace wwwapi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ability");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Prof = false,
-                            Value = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Prof = true,
-                            Value = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Prof = false,
-                            Value = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Prof = true,
-                            Value = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Prof = false,
-                            Value = 5
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Prof = true,
-                            Value = 6
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Prof = false,
-                            Value = 7
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Prof = true,
-                            Value = 8
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Prof = false,
-                            Value = 9
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Prof = true,
-                            Value = 10
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Prof = false,
-                            Value = 11
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Prof = true,
-                            Value = 12
-                        });
                 });
 
             modelBuilder.Entity("wwwapi.Models.Character", b =>
@@ -278,21 +180,14 @@ namespace wwwapi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id");
 
                     b.ToTable("characters");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Steve"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "John"
-                        });
                 });
 
             modelBuilder.Entity("wwwapi.Models.Skill", b =>
@@ -319,260 +214,6 @@ namespace wwwapi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("skill");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Attribute = 4,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Attribute = 3,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Attribute = 0,
-                            Exp = false,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Attribute = 5,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Attribute = 3,
-                            Exp = true,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Attribute = 4,
-                            Exp = false,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Attribute = 5,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Attribute = 3,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Attribute = 4,
-                            Exp = false,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Attribute = 3,
-                            Exp = true,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Attribute = 4,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Attribute = 5,
-                            Exp = false,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Attribute = 5,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Attribute = 3,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Attribute = 1,
-                            Exp = true,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Attribute = 1,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Attribute = 4,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Attribute = 1,
-                            Exp = false,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Attribute = 4,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Attribute = 3,
-                            Exp = true,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Attribute = 0,
-                            Exp = false,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Attribute = 5,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Attribute = 3,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Attribute = 4,
-                            Exp = false,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Attribute = 5,
-                            Exp = true,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Attribute = 3,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Attribute = 4,
-                            Exp = false,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Attribute = 3,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Attribute = 4,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 30,
-                            Attribute = 5,
-                            Exp = true,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 31,
-                            Attribute = 5,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 32,
-                            Attribute = 3,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 33,
-                            Attribute = 1,
-                            Exp = false,
-                            Prof = true
-                        },
-                        new
-                        {
-                            Id = 34,
-                            Attribute = 1,
-                            Exp = false,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 35,
-                            Attribute = 4,
-                            Exp = true,
-                            Prof = false
-                        },
-                        new
-                        {
-                            Id = 36,
-                            Attribute = 1,
-                            Exp = false,
-                            Prof = true
-                        });
                 });
 
             modelBuilder.Entity("wwwapi.Models.Skills", b =>
@@ -702,54 +343,6 @@ namespace wwwapi.Migrations
                     b.HasIndex("SurvivalId");
 
                     b.ToTable("skills");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AcrobaticsId = 1,
-                            AnimalHandlingId = 2,
-                            ArcanaId = 3,
-                            AthleticsId = 4,
-                            CharacterId = 1,
-                            DeceptionId = 5,
-                            HistoryId = 6,
-                            InsightId = 7,
-                            IntimidationId = 8,
-                            InvestigationId = 9,
-                            MedicineId = 10,
-                            NatureId = 11,
-                            PerceptionId = 12,
-                            PerformanceId = 13,
-                            PersuationId = 14,
-                            ReligionId = 15,
-                            SleightOfHandId = 16,
-                            StealthId = 17,
-                            SurvivalId = 18
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AcrobaticsId = 19,
-                            AnimalHandlingId = 20,
-                            ArcanaId = 21,
-                            AthleticsId = 22,
-                            CharacterId = 2,
-                            DeceptionId = 23,
-                            HistoryId = 24,
-                            InsightId = 25,
-                            IntimidationId = 26,
-                            InvestigationId = 27,
-                            MedicineId = 28,
-                            NatureId = 29,
-                            PerceptionId = 30,
-                            PerformanceId = 31,
-                            PersuationId = 32,
-                            ReligionId = 33,
-                            SleightOfHandId = 34,
-                            StealthId = 35,
-                            SurvivalId = 36
-                        });
                 });
 
             modelBuilder.Entity("wwwapi.Models.Speed", b =>
@@ -775,20 +368,6 @@ namespace wwwapi.Migrations
                         .IsUnique();
 
                     b.ToTable("speed");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CharacterId = 1,
-                            Value = 30
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CharacterId = 2,
-                            Value = 35
-                        });
                 });
 
             modelBuilder.Entity("wwwapi.Models.Style", b =>
@@ -866,42 +445,6 @@ namespace wwwapi.Migrations
                         .IsUnique();
 
                     b.ToTable("styles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Age = 21,
-                            Alignment = 4,
-                            Background = 2,
-                            CharacterId = 1,
-                            Class_ = 11,
-                            Description = "Description",
-                            Eyes = "Blue",
-                            Hair = "Not blue",
-                            Height = "2'11",
-                            Name = "Name",
-                            Race = "No",
-                            Skin = "Blue",
-                            Width = "2'6"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Age = 22,
-                            Alignment = 6,
-                            Background = 1,
-                            CharacterId = 2,
-                            Class_ = 6,
-                            Description = "Other Description",
-                            Eyes = "Other Blue",
-                            Hair = "Other Not blue",
-                            Height = "4'11",
-                            Name = "Other Name",
-                            Race = "Other No",
-                            Skin = "Other Blue",
-                            Width = "1'6"
-                        });
                 });
 
             modelBuilder.Entity("wwwapi.Models.Users.User", b =>
