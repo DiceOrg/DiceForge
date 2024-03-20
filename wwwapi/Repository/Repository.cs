@@ -40,7 +40,7 @@ namespace wwwapi.Repository
         }
 
         public IQueryable<T> GetByCondition(Expression<Func<T, bool>> expression)
-        {
+        {   
             return _dbSet.Where(expression);
         }
 

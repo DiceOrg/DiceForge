@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using wwwapi.DataTransfer.Models;
 
 namespace wwwapi.Models
 {
@@ -34,6 +35,22 @@ namespace wwwapi.Models
         public Background? Background { get; set; } = null;
         [Column("character_id"), ForeignKey("Character"), JsonIgnore]
         public int CharacterId { get; set; }
+
+        public void Update(StyleDto styleDto)
+        {
+            Name = styleDto.Name;
+            Description = styleDto.Description;
+            Age = styleDto.Age;
+            Height = styleDto.Height;
+            Width = styleDto.Width;
+            Eyes = styleDto.Eyes;
+            Hair = styleDto.Hair;
+            Skin = styleDto.Skin;
+            Race = styleDto.Race;
+            Class_ = styleDto.Class_;
+            Alignment = styleDto.Alignment;
+            Background = styleDto.Background;
+        }
     }
 
     public enum Class_

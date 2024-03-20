@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using wwwapi.DataTransfer.Models;
 using wwwapi.Helpers;
 using wwwapi.Models;
 using wwwapi.Repository;
@@ -72,9 +73,13 @@ namespace wwwapi.Endpoints
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateAbility(IRepository<Ability> repository, int id, Ability ability)
+        public static async Task<IResult> UpdateAbility(IRepository<Ability> repository, int id, AbilityDto abilityDto)
         {
-            if (ability == null || ability.Id != id) return TypedResults.BadRequest("Given Id does not correspond with the Id of object. ");
+            Ability ability = await repository.Get(id);
+            if (ability == null)
+                return TypedResults.NotFound();
+
+            ability.Update(abilityDto);
 
             Ability result = await repository.Update(ability);
 
@@ -83,20 +88,28 @@ namespace wwwapi.Endpoints
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateCharacter(IRepository<Character> repository, int id, Character character)
+        public static async Task<IResult> UpdateCharacter(IRepository<Character> repository, int id, CharacterDto characterDto)
         {
-            if (character == null || character.Id != id) return TypedResults.BadRequest("Given Id does not correspond with the Id of object. ");
+            Character character = await repository.Get(id);
+            if (character == null)
+                return TypedResults.NotFound();
+
+            character.Update(characterDto);
 
             Character result = await repository.Update(character);
 
-            return TypedResults.Ok(character);
+            return TypedResults.Ok(result);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateSkill(IRepository<Skill> repository, int id, Skill skill)
+        public static async Task<IResult> UpdateSkill(IRepository<Skill> repository, int id, SkillDto skillDto)
         {
-            if (skill == null || skill.Id != id) return TypedResults.BadRequest("Given Id does not correspond with the Id of object. ");
+            Skill skill = await repository.Get(id);
+            if (skill == null ) return 
+                TypedResults.NotFound();
+
+            skill.Update(skillDto);
 
             Skill result = await repository.Update(skill);
 
@@ -105,9 +118,13 @@ namespace wwwapi.Endpoints
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateSpeed(IRepository<Speed> repository, int id, Speed speed)
+        public static async Task<IResult> UpdateSpeed(IRepository<Speed> repository, int id, SpeedDto speedDto)
         {
-            if (speed == null || speed.Id != id) return TypedResults.BadRequest("Given Id does not correspond with the Id of object. ");
+            Speed speed = await repository.Get(id);
+            if (speed == null)
+                return TypedResults.NotFound();
+
+            speed.Update(speedDto);
 
             Speed result = await repository.Update(speed);
 
@@ -116,9 +133,13 @@ namespace wwwapi.Endpoints
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateStyle(IRepository<Style> repository, int id, Style style)
+        public static async Task<IResult> UpdateStyle(IRepository<Style> repository, int id, StyleDto styleDto)
         {
-            if (style == null || style.Id != id) return TypedResults.BadRequest("Given Id does not correspond with the Id of object. ");
+            Style style = await repository.Get(id);
+            if (style == null)
+                return TypedResults.NotFound();
+
+            style.Update(styleDto);
 
             Style result = await repository.Update(style);
 
