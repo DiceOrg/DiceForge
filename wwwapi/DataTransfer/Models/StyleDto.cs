@@ -14,8 +14,8 @@ namespace wwwapi.DataTransfer.Models
         public string Hair { get; set; } = "";
         public string Skin { get; set; } = "";
         public string Race { get; set; } = "";
-        public Class_? Class_ { get; set; } = null;
-        public Alignment? Alignment { get; set; } = null;
-        public Background? Background { get; set; } = null;
+        public string Class_ { get; set; } = "";
+        public string Alignment { get; set; } = "";
+        public string Background { get; set; } = "";
     }
 }

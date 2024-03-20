@@ -28,11 +28,11 @@ namespace wwwapi.Models
         [Column("race")]
         public string Race { get; set; } = "";
         [Column("class")]
-        public Class_? Class_ { get; set; } = null;
+        public string? Class_ { get; set; } = "";
         [Column("alignment")]
-        public Alignment? Alignment { get; set; } = null;
+        public string? Alignment { get; set; } = "";
         [Column("background")]
-        public Background? Background { get; set; } = null;
+        public string? Background { get; set; } = "";
         [Column("character_id"), ForeignKey("Character"), JsonIgnore]
         public int CharacterId { get; set; }
 
