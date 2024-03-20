@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using wwwapi.DataTransfer.Models;
 
 namespace wwwapi.Models
 {
@@ -11,5 +12,10 @@ namespace wwwapi.Models
         public int Value { get; set; } = 8;
         [Column("prof")]
         public bool Prof { get; set; } = false;
+        public void Update(AbilityDto abilityDto)
+        {
+            Value = abilityDto.Value;
+            Prof = abilityDto.Prof;
+        }
     }
 }

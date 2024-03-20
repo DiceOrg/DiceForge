@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using wwwapi.DataTransfer.Models;
 
 namespace wwwapi.Models
 {
@@ -15,5 +16,7 @@ namespace wwwapi.Models
         public Speed Speed { get; set; }
         [Column("user_id"), ForeignKey("user"), JsonIgnore]
         public string UserId { get; set; }
+
+        public void Update(CharacterDto characterDto) { Name = characterDto.Name; }
     }
 }

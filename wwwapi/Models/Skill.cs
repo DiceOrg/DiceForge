@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using wwwapi.DataTransfer.Models;
 
 namespace wwwapi.Models
 {
@@ -15,7 +16,14 @@ namespace wwwapi.Models
         [Column("prof")]
         public bool Prof { get; set; } = false;
         [Column("exp")]
+
         public bool Exp { get; set; } = false;
+
+        public void Update(SkillDto skillDto) { 
+            Attribute = skillDto.Attribute;
+            Prof = skillDto.Prof;
+            Exp = skillDto.Exp;
+        }
     }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
