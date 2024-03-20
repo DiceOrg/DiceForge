@@ -77,9 +77,9 @@ namespace wwwapi.Data
                     Hair = "Not blue", 
                     Skin = "Blue", 
                     Race = "No", 
-                    Class_ = Class_.Wizard, 
-                    Alignment = Alignment.Neutral, 
-                    Background = Background.Criminal,
+                    Class_ = "", 
+                    Alignment = "", 
+                    Background = "",
 
                     CharacterId = 1
                 },
@@ -95,9 +95,9 @@ namespace wwwapi.Data
                     Hair = "Other Not blue",
                     Skin = "Other Blue",
                     Race = "Other No",
-                    Class_ = Class_.Paladin,
-                    Alignment = Alignment.LawfulEvil,
-                    Background = Background.Charlatan,
+                    Class_ = "",
+                    Alignment = "",
+                    Background = "",
 
                     CharacterId = 2
                 }

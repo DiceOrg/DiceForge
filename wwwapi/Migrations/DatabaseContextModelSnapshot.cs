@@ -383,20 +383,20 @@ namespace wwwapi.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("age");
 
-                    b.Property<int?>("Alignment")
-                        .HasColumnType("integer")
+                    b.Property<string>("Alignment")
+                        .HasColumnType("text")
                         .HasColumnName("alignment");
 
-                    b.Property<int?>("Background")
-                        .HasColumnType("integer")
+                    b.Property<string>("Background")
+                        .HasColumnType("text")
                         .HasColumnName("background");
 
                     b.Property<int>("CharacterId")
                         .HasColumnType("integer")
                         .HasColumnName("character_id");
 
-                    b.Property<int?>("Class_")
-                        .HasColumnType("integer")
+                    b.Property<string>("Class_")
+                        .HasColumnType("text")
                         .HasColumnName("class");
 
                     b.Property<string>("Description")
