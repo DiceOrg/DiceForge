@@ -51,9 +51,6 @@ builder.Services.AddSwaggerGen(option =>
 
 builder.Services.AddProblemDetails();
 builder.Services.AddRouting(options => options.LowercaseUrls = true);
-builder.Services.AddDbContext<DatabaseContext>();
-builder.Services.AddScoped<IRepository<Character>, Repository<Character>>();
-builder.Services.AddScoped<IRepository<Style>,  Repository<Style>>();
 builder.Services.AddScoped<TokenService, TokenService>();
 
 builder.Services.AddControllers().AddJsonOptions(opt =>
@@ -93,12 +90,15 @@ var validIssuer = builder.Configuration.GetValue<string>("JwtTokenSettings:Valid
 var validAudience = builder.Configuration.GetValue<string>("JwtTokenSettings:ValidAudience");
 var symmetricSecurityKey = builder.Configuration.GetValue<string>("JwtTokenSettings:SymmetricSecurityKey");
 
+builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddScoped<IRepository<Character>, Repository<Character>>();
 builder.Services.AddScoped<IRepository<Abilities>, Repository<Abilities>>();
 builder.Services.AddScoped<IRepository<Ability>, Repository<Ability>>();
 builder.Services.AddScoped<IRepository<Skills>, Repository<Skills>>();
 builder.Services.AddScoped<IRepository<Skill>, Repository<Skill>>();
 builder.Services.AddScoped<IRepository<Speed>, Repository<Speed>>();
 builder.Services.AddScoped<IRepository<Style>, Repository<Style>>();
+builder.Services.AddScoped<IRepository<HitPoints>, Repository<HitPoints>>();
 
 builder.Services.AddAuthentication(options =>
 {

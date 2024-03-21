@@ -10,21 +10,29 @@ namespace wwwapi.Helpers
             IRepository<Abilities> abiltiesRepository, IRepository<Ability> abilityRepository, 
             IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
             IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository, 
-            IRepository<Style> styleRepository, string userId)
+            IRepository<Style> styleRepository, IRepository<HitPoints> healthRepository,
+            string userId)
         {
 
             Character character = await characterRepository.Create(new Character()
             {
-                Name = name,
+                Level = 1,
                 UserId = userId
             });
 
+
+            await CharacterHelper.toHitPoints(healthRepository, character.Id);
             await CharacterHelper.toAbilities(abiltiesRepository, abilityRepository, character.Id);
             await CharacterHelper.toSkills(skillsRepository, skillRepository, character.Id);
             await CharacterHelper.toSpeed(speedRepository, character.Id);
             await CharacterHelper.toStyle(styleRepository, character.Id, name);
 
             return character;
+        }
+
+        public static async Task<HitPoints> toHitPoints(IRepository<HitPoints> repository, int id)
+        {
+            return await repository.Create(new HitPoints() { characterId = id });
         }
 
         public static async Task<Ability> toAbility(IRepository<Ability> repository)
@@ -105,7 +113,7 @@ namespace wwwapi.Helpers
             IRepository<Abilities> abiltiesRepository, IRepository<Ability> abilityRepository,
             IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
             IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository,
-            IRepository<Style> styleRepository){
+            IRepository<Style> styleRepository, IRepository<HitPoints> healthRepository){
 
             Abilities abilities = character.Abilities;
             Skills skills = character.Skills;
@@ -114,7 +122,7 @@ namespace wwwapi.Helpers
             foreach (string propertyName in SkillToAbility.Keys) {
                 PropertyInfo property = skills.GetType().GetProperty(propertyName);
 
-                skillRepository.Delete((Skill) property.GetValue(skills));
+                await skillRepository.Delete((Skill) property.GetValue(skills));
             }
 
             List<string> propertyNames = new List<string>
@@ -126,14 +134,15 @@ namespace wwwapi.Helpers
             {
                 PropertyInfo property = abilities.GetType().GetProperty(propertyName);
 
-                abilityRepository.Delete((Ability) property.GetValue(abilities));
+                await abilityRepository.Delete((Ability) property.GetValue(abilities));
             }
 
-            speedRepository.Delete(character.Speed);
-            styleRepository.Delete(character.Style);
-            abiltiesRepository.Delete(abilities);
-            skillsRepository.Delete(skills);
-            characterRepository.Delete(character);
+            await healthRepository.Delete(character.HitPoints);
+            await speedRepository.Delete(character.Speed);
+            await styleRepository.Delete(character.Style);
+            await abiltiesRepository.Delete(abilities);
+            await skillsRepository.Delete(skills);
+            await characterRepository.Delete(character);
 
             return true;
         }

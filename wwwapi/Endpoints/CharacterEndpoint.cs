@@ -17,10 +17,11 @@ namespace wwwapi.Endpoints
 
             characterGroup.MapGet("", GetCharacters);
             characterGroup.MapGet("/{id}", GetCharacter);
+
             characterGroup.MapPost("/", CreateCharacter);
 
             characterGroup.MapPut("/Ability/{id}", UpdateAbility);
-            characterGroup.MapPut("/{id}", UpdateCharacter);
+            // characterGroup.MapPut("/{id}", UpdateCharacter);
             characterGroup.MapPut("/Skill/{id}", UpdateSkill);
             characterGroup.MapPut("/Speed/{id}", UpdateSpeed);
             characterGroup.MapPut("/Style/{id}", UpdateStyle);
@@ -63,15 +64,15 @@ namespace wwwapi.Endpoints
             IRepository<Abilities> abiltiesRepository, IRepository<Ability> abilityRepository,
             IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
             IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository,
-            IRepository<Style> styleRepository, ClaimsPrincipal user)
+            IRepository<Style> styleRepository, IRepository<HitPoints> heathRepository, ClaimsPrincipal user)
         {
-            if (name != null)
+            if (name == null)
                 return TypedResults.BadRequest("Name needs to have a value");
 
             string id = user.UserId();
             Character character = await CharacterHelper.toCharacter(name, abiltiesRepository, abilityRepository,
             characterRepository, skillRepository, skillsRepository, speedRepository,
-            styleRepository, id);
+            styleRepository, heathRepository, id);
             
 
             return TypedResults.Ok(character);
@@ -92,7 +93,7 @@ namespace wwwapi.Endpoints
             return TypedResults.Ok(result);
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
+/*        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public static async Task<IResult> UpdateCharacter(IRepository<Character> repository, int id, 
             CharacterDto characterDto, ClaimsPrincipal user)
@@ -111,7 +112,7 @@ namespace wwwapi.Endpoints
             Character result = await repository.Update(character);
 
             return TypedResults.Ok(result);
-        }
+        }*/
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -162,7 +163,8 @@ namespace wwwapi.Endpoints
             IRepository<Abilities> abiltiesRepository, IRepository<Ability> abilityRepository,
             IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
             IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository,
-            IRepository<Style> styleRepository, int id, ClaimsPrincipal user) {
+            IRepository<Style> styleRepository, IRepository<HitPoints> healthRepository,
+            int id, ClaimsPrincipal user) {
 
             Character character = await repository.Get(id);
 
@@ -174,7 +176,7 @@ namespace wwwapi.Endpoints
 
             bool status = await CharacterHelper.deleteCharacter(character, abiltiesRepository, abilityRepository,
                 characterRepository, skillRepository, skillsRepository, speedRepository,
-                styleRepository);
+                styleRepository, healthRepository);
 
             return TypedResults.Ok(character);
         }

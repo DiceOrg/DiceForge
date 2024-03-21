@@ -23,6 +23,7 @@ namespace wwwapi.Data
             modelBuilder.Entity<Character>().Navigation(c => c.Skills).AutoInclude();
             modelBuilder.Entity<Character>().Navigation(c => c.Speed).AutoInclude();
             modelBuilder.Entity<Character>().Navigation(c => c.Style).AutoInclude();
+            modelBuilder.Entity<Character>().Navigation(c => c.HitPoints).AutoInclude();
 
             // auto include for getting all information through abilities
             modelBuilder.Entity<Abilities>().Navigation(a => a.Strength).AutoInclude();

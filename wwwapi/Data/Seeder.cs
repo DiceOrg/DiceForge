@@ -13,12 +13,10 @@ namespace wwwapi.Data
             modelBuilder.Entity<Character>().HasData(new List<Character>{
                 new Character()
                 {
-                    Name = "Steve",
                     Id = 1
                 }, 
                 new Character()
                 {
-                    Name = "John",
                     Id = 2
                 }
             });
