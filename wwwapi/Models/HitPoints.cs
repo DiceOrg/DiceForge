@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
+using wwwapi.DataTransfer.Models;
 
 namespace wwwapi.Models
 {
@@ -17,5 +18,12 @@ namespace wwwapi.Models
 
         [Column("character_id"), ForeignKey("Character"), JsonIgnore]
         public int characterId { get; set; }
+
+        public void Update(HitPointDto hitPointDto)
+        {
+            Current = hitPointDto.Current;
+            Max = hitPointDto.Max;
+            Temp = hitPointDto.Temp;
+        }
     }
 }

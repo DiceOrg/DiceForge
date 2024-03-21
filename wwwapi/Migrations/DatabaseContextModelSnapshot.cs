@@ -177,11 +177,8 @@ namespace wwwapi.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("Level")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("integer")
+                        .HasColumnName("level");
 
                     b.Property<string>("UserId")
                         .IsRequired()

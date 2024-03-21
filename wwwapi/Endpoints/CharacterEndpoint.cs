@@ -27,6 +27,7 @@ namespace wwwapi.Endpoints
             characterGroup.MapPut("/Style/{id}", UpdateStyle);
 
             characterGroup.MapDelete("/{id}", DeleteCharacter);
+            characterGroup.MapPut("/Hitpoints/{id}", UpdateHitPoints);
 
 
         }
@@ -181,6 +182,20 @@ namespace wwwapi.Endpoints
             return TypedResults.Ok(character);
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public static async Task<IResult> UpdateHitPoints(IRepository<HitPoints> repository, int id, HitPointDto hitPointDto)
+        {
+            HitPoints hp = await repository.Get(id);
+            if (hp == null)
+                return TypedResults.NotFound();
+
+            hp.Update(hitPointDto);
+
+            HitPoints result = await repository.Update(hp);
+
+            return TypedResults.Ok(result);
+        }
     }
 }
 
