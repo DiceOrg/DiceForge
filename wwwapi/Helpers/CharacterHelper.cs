@@ -137,12 +137,16 @@ namespace wwwapi.Helpers
                 await abilityRepository.Delete((Ability) property.GetValue(abilities));
             }
 
-            await healthRepository.Delete(character.HitPoints);
+
+            // This is solved by cascade from auto-include
+/*            await healthRepository.Delete(character.HitPoints);
             await speedRepository.Delete(character.Speed);
             await styleRepository.Delete(character.Style);
             await abiltiesRepository.Delete(abilities);
-            await skillsRepository.Delete(skills);
+            await skillsRepository.Delete(skills);*/
+
             await characterRepository.Delete(character);
+
 
             return true;
         }
