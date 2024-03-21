@@ -176,6 +176,9 @@ namespace wwwapi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Level")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -188,6 +191,39 @@ namespace wwwapi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("characters");
+                });
+
+            modelBuilder.Entity("wwwapi.Models.HitPoints", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Current")
+                        .HasColumnType("integer")
+                        .HasColumnName("current");
+
+                    b.Property<int>("Max")
+                        .HasColumnType("integer")
+                        .HasColumnName("max");
+
+                    b.Property<int>("Temp")
+                        .HasColumnType("integer")
+                        .HasColumnName("temp");
+
+                    b.Property<int>("characterId")
+                        .HasColumnType("integer")
+                        .HasColumnName("character_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("characterId")
+                        .IsUnique();
+
+                    b.ToTable("HitPoints");
                 });
 
             modelBuilder.Entity("wwwapi.Models.Skill", b =>
@@ -598,6 +634,15 @@ namespace wwwapi.Migrations
                     b.Navigation("Wisdom");
                 });
 
+            modelBuilder.Entity("wwwapi.Models.HitPoints", b =>
+                {
+                    b.HasOne("wwwapi.Models.Character", null)
+                        .WithOne("HitPoints")
+                        .HasForeignKey("wwwapi.Models.HitPoints", "characterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("wwwapi.Models.Skills", b =>
                 {
                     b.HasOne("wwwapi.Models.Skill", "Acrobatics")
@@ -772,6 +817,9 @@ namespace wwwapi.Migrations
             modelBuilder.Entity("wwwapi.Models.Character", b =>
                 {
                     b.Navigation("Abilities")
+                        .IsRequired();
+
+                    b.Navigation("HitPoints")
                         .IsRequired();
 
                     b.Navigation("Skills")

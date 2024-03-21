@@ -92,6 +92,7 @@ builder.Services
 var validIssuer = builder.Configuration.GetValue<string>("JwtTokenSettings:ValidIssuer");
 var validAudience = builder.Configuration.GetValue<string>("JwtTokenSettings:ValidAudience");
 var symmetricSecurityKey = builder.Configuration.GetValue<string>("JwtTokenSettings:SymmetricSecurityKey");
+
 builder.Services.AddScoped<IRepository<Abilities>, Repository<Abilities>>();
 builder.Services.AddScoped<IRepository<Ability>, Repository<Ability>>();
 builder.Services.AddScoped<IRepository<Skills>, Repository<Skills>>();

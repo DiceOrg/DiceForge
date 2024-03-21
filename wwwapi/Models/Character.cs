@@ -10,10 +10,12 @@ namespace wwwapi.Models
         [Column("id")]
         public int Id { get; set; }
         public string Name { get; set; }
+        public int Level { get; set; }
         public Style Style { get; set; }
         public Abilities Abilities { get; set; }
         public Skills Skills { get; set; }
         public Speed Speed { get; set; }
+        public HitPoints HitPoints { get; set; }
         [Column("user_id"), ForeignKey("user"), JsonIgnore]
         public string UserId { get; set; }
 
