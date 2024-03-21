@@ -20,7 +20,7 @@ namespace wwwapi.Endpoints
 
             characterGroup.MapPut("/Ability/{id}", UpdateAbility);
             characterGroup.MapPut("/{id}", UpdateCharacter);
-            characterGroup.MapPut("/Atribute/{id}", UpdateSkill);
+            characterGroup.MapPut("/Skill/{id}", UpdateSkill);
             characterGroup.MapPut("/Speed/{id}", UpdateSpeed);
             characterGroup.MapPut("/Style/{id}", UpdateStyle);
 
