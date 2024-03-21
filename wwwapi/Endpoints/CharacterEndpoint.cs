@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Xml.Linq;
 using wwwapi.DataTransfer.Models;
 using wwwapi.Helpers;
 using wwwapi.Models;
@@ -24,6 +25,8 @@ namespace wwwapi.Endpoints
             characterGroup.MapPut("/Speed/{id}", UpdateSpeed);
             characterGroup.MapPut("/Style/{id}", UpdateStyle);
 
+            characterGroup.MapDelete("/{id}", DeleteCharacter);
+
 
         }
 
@@ -41,15 +44,15 @@ namespace wwwapi.Endpoints
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public static async Task<IResult> GetCharacter(IRepository<Character> repository, int id
-            //ClaimsPrincipal user
+        public static async Task<IResult> GetCharacter(IRepository<Character> repository, int id,
+            ClaimsPrincipal user
             )
         {
             Character character = await repository.Get(id);
             if (character == null)
                 return TypedResults.NotFound("No characters found");
-            /*if (user.UserId() != character.UserId)
-                return TypedResults.Unauthorized();*/
+            if (user.UserId() != character.UserId)
+                return TypedResults.Unauthorized();
 
             return TypedResults.Ok(character);
         }
@@ -62,6 +65,9 @@ namespace wwwapi.Endpoints
             IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository,
             IRepository<Style> styleRepository, ClaimsPrincipal user)
         {
+            if (name != null)
+                return TypedResults.BadRequest("Name needs to have a value");
+
             string id = user.UserId();
             Character character = await CharacterHelper.toCharacter(name, abiltiesRepository, abilityRepository,
             characterRepository, skillRepository, skillsRepository, speedRepository,
@@ -88,11 +94,17 @@ namespace wwwapi.Endpoints
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateCharacter(IRepository<Character> repository, int id, CharacterDto characterDto)
+        public static async Task<IResult> UpdateCharacter(IRepository<Character> repository, int id, 
+            CharacterDto characterDto, ClaimsPrincipal user)
         {
             Character character = await repository.Get(id);
             if (character == null)
                 return TypedResults.NotFound();
+
+            if (user.UserId() != character.UserId)
+                return TypedResults.Unauthorized();
+
+
 
             character.Update(characterDto);
 
@@ -146,5 +158,27 @@ namespace wwwapi.Endpoints
             return TypedResults.Ok(result);
         }
 
+        public static async Task<IResult> DeleteCharacter(IRepository<Character> repository,
+            IRepository<Abilities> abiltiesRepository, IRepository<Ability> abilityRepository,
+            IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
+            IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository,
+            IRepository<Style> styleRepository, int id, ClaimsPrincipal user) {
+
+            Character character = await repository.Get(id);
+
+            if ( character == null )
+                return TypedResults.NotFound("Character not found");
+
+            if (user.UserId() != character.UserId)
+                return TypedResults.Unauthorized();
+
+            bool status = await CharacterHelper.deleteCharacter(character, abiltiesRepository, abilityRepository,
+                characterRepository, skillRepository, skillsRepository, speedRepository,
+                styleRepository);
+
+            return TypedResults.Ok(character);
+        }
+
     }
 }
+

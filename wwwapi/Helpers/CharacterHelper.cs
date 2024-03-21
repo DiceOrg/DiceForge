@@ -1,8 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
-using System.Text.Json.Serialization;
+﻿using System.Reflection;
 using wwwapi.Models;
-using wwwapi.Models.Users;
 using wwwapi.Repository;
 
 namespace wwwapi.Helpers
@@ -25,7 +22,7 @@ namespace wwwapi.Helpers
             await CharacterHelper.toAbilities(abiltiesRepository, abilityRepository, character.Id);
             await CharacterHelper.toSkills(skillsRepository, skillRepository, character.Id);
             await CharacterHelper.toSpeed(speedRepository, character.Id);
-            await CharacterHelper.toStyle(styleRepository, character.Id);
+            await CharacterHelper.toStyle(styleRepository, character.Id, name);
 
             return character;
         }
@@ -99,9 +96,47 @@ namespace wwwapi.Helpers
             return await repository.Create(new Skill() { Attribute = ability, });
         }
 
-        public static async Task<Style> toStyle(IRepository<Style> repository, int id)
+        public static async Task<Style> toStyle(IRepository<Style> repository, int id, string name)
         {
-            return await repository.Create(new Style() { CharacterId = id });;
-        } 
+            return await repository.Create(new Style() { CharacterId = id, Name = name });;
+        }
+
+        public static async Task<bool> deleteCharacter(Character character,
+            IRepository<Abilities> abiltiesRepository, IRepository<Ability> abilityRepository,
+            IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
+            IRepository<Skills> skillsRepository, IRepository<Speed> speedRepository,
+            IRepository<Style> styleRepository){
+
+            Abilities abilities = character.Abilities;
+            Skills skills = character.Skills;
+
+            
+            foreach (string propertyName in SkillToAbility.Keys) {
+                PropertyInfo property = skills.GetType().GetProperty(propertyName);
+
+                skillRepository.Delete((Skill) property.GetValue(skills));
+            }
+
+            List<string> propertyNames = new List<string>
+            {
+                "Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"
+            };
+
+            foreach (string propertyName in propertyNames)
+            {
+                PropertyInfo property = abilities.GetType().GetProperty(propertyName);
+
+                abilityRepository.Delete((Ability) property.GetValue(abilities));
+            }
+
+            speedRepository.Delete(character.Speed);
+            styleRepository.Delete(character.Style);
+            abiltiesRepository.Delete(abilities);
+            skillsRepository.Delete(skills);
+            characterRepository.Delete(character);
+
+            return true;
+        }
     }
+
 }
