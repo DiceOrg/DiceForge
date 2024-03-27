@@ -1,7 +1,7 @@
 ﻿namespace wwwapi.DataTransfer.Models
 {
-    public class SpeedDto
+/*    public class SpeedDto
     {
         public int Value { get; set; }
-    }
+    }*/
 }

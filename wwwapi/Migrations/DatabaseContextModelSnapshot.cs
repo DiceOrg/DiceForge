@@ -88,7 +88,7 @@ namespace wwwapi.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("wwwapi.Models.Abilities", b =>
+            modelBuilder.Entity("wwwapi.Models.Ability", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -101,58 +101,10 @@ namespace wwwapi.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("character_id");
 
-                    b.Property<int>("CharismaId")
-                        .HasColumnType("integer")
-                        .HasColumnName("charisma_id");
-
-                    b.Property<int>("ConstitutionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("constitution_id");
-
-                    b.Property<int>("DexterityId")
-                        .HasColumnType("integer")
-                        .HasColumnName("dexterity_id");
-
-                    b.Property<int>("IntelligenceId")
-                        .HasColumnType("integer")
-                        .HasColumnName("intelligence_id");
-
-                    b.Property<int>("StrengthId")
-                        .HasColumnType("integer")
-                        .HasColumnName("strength_id");
-
-                    b.Property<int>("WisdomId")
-                        .HasColumnType("integer")
-                        .HasColumnName("wisdom_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CharacterId")
-                        .IsUnique();
-
-                    b.HasIndex("CharismaId");
-
-                    b.HasIndex("ConstitutionId");
-
-                    b.HasIndex("DexterityId");
-
-                    b.HasIndex("IntelligenceId");
-
-                    b.HasIndex("StrengthId");
-
-                    b.HasIndex("WisdomId");
-
-                    b.ToTable("abilities");
-                });
-
-            modelBuilder.Entity("wwwapi.Models.Ability", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<bool>("Prof")
                         .HasColumnType("boolean")
@@ -163,6 +115,8 @@ namespace wwwapi.Migrations
                         .HasColumnName("value");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
 
                     b.ToTable("ability");
                 });
@@ -180,6 +134,9 @@ namespace wwwapi.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("level");
 
+                    b.Property<int>("Speed")
+                        .HasColumnType("integer");
+
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("text")
@@ -190,7 +147,7 @@ namespace wwwapi.Migrations
                     b.ToTable("characters");
                 });
 
-            modelBuilder.Entity("wwwapi.Models.HitPoints", b =>
+            modelBuilder.Entity("wwwapi.Models.Health", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -198,6 +155,10 @@ namespace wwwapi.Migrations
                         .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("integer")
+                        .HasColumnName("character_id");
 
                     b.Property<int>("Current")
                         .HasColumnType("integer")
@@ -211,16 +172,12 @@ namespace wwwapi.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("temp");
 
-                    b.Property<int>("characterId")
-                        .HasColumnType("integer")
-                        .HasColumnName("character_id");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("characterId")
+                    b.HasIndex("CharacterId")
                         .IsUnique();
 
-                    b.ToTable("HitPoints");
+                    b.ToTable("health");
                 });
 
             modelBuilder.Entity("wwwapi.Models.Skill", b =>
@@ -236,9 +193,18 @@ namespace wwwapi.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("attribute");
 
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("integer")
+                        .HasColumnName("character_id");
+
                     b.Property<bool>("Exp")
                         .HasColumnType("boolean")
                         .HasColumnName("exp");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
 
                     b.Property<bool>("Prof")
                         .HasColumnType("boolean")
@@ -246,161 +212,9 @@ namespace wwwapi.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CharacterId");
+
                     b.ToTable("skill");
-                });
-
-            modelBuilder.Entity("wwwapi.Models.Skills", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AcrobaticsId")
-                        .HasColumnType("integer")
-                        .HasColumnName("acrobatics_id");
-
-                    b.Property<int>("AnimalHandlingId")
-                        .HasColumnType("integer")
-                        .HasColumnName("animal_handling_id");
-
-                    b.Property<int>("ArcanaId")
-                        .HasColumnType("integer")
-                        .HasColumnName("arcana_id");
-
-                    b.Property<int>("AthleticsId")
-                        .HasColumnType("integer")
-                        .HasColumnName("athletics_id");
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("integer")
-                        .HasColumnName("character_id");
-
-                    b.Property<int>("DeceptionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("deception_id");
-
-                    b.Property<int>("HistoryId")
-                        .HasColumnType("integer")
-                        .HasColumnName("history_id");
-
-                    b.Property<int>("InsightId")
-                        .HasColumnType("integer")
-                        .HasColumnName("insight_id");
-
-                    b.Property<int>("IntimidationId")
-                        .HasColumnType("integer")
-                        .HasColumnName("intimidation_id");
-
-                    b.Property<int>("InvestigationId")
-                        .HasColumnType("integer")
-                        .HasColumnName("investigation_id");
-
-                    b.Property<int>("MedicineId")
-                        .HasColumnType("integer")
-                        .HasColumnName("medicine_id");
-
-                    b.Property<int>("NatureId")
-                        .HasColumnType("integer")
-                        .HasColumnName("nature_id");
-
-                    b.Property<int>("PerceptionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("perception_id");
-
-                    b.Property<int>("PerformanceId")
-                        .HasColumnType("integer")
-                        .HasColumnName("performance_id");
-
-                    b.Property<int>("PersuationId")
-                        .HasColumnType("integer")
-                        .HasColumnName("persuation_id");
-
-                    b.Property<int>("ReligionId")
-                        .HasColumnType("integer")
-                        .HasColumnName("religion_id");
-
-                    b.Property<int>("SleightOfHandId")
-                        .HasColumnType("integer")
-                        .HasColumnName("sleight_of_hand_id");
-
-                    b.Property<int>("StealthId")
-                        .HasColumnType("integer")
-                        .HasColumnName("stealth_id");
-
-                    b.Property<int>("SurvivalId")
-                        .HasColumnType("integer")
-                        .HasColumnName("survival_id");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AcrobaticsId");
-
-                    b.HasIndex("AnimalHandlingId");
-
-                    b.HasIndex("ArcanaId");
-
-                    b.HasIndex("AthleticsId");
-
-                    b.HasIndex("CharacterId")
-                        .IsUnique();
-
-                    b.HasIndex("DeceptionId");
-
-                    b.HasIndex("HistoryId");
-
-                    b.HasIndex("InsightId");
-
-                    b.HasIndex("IntimidationId");
-
-                    b.HasIndex("InvestigationId");
-
-                    b.HasIndex("MedicineId");
-
-                    b.HasIndex("NatureId");
-
-                    b.HasIndex("PerceptionId");
-
-                    b.HasIndex("PerformanceId");
-
-                    b.HasIndex("PersuationId");
-
-                    b.HasIndex("ReligionId");
-
-                    b.HasIndex("SleightOfHandId");
-
-                    b.HasIndex("StealthId");
-
-                    b.HasIndex("SurvivalId");
-
-                    b.ToTable("skills");
-                });
-
-            modelBuilder.Entity("wwwapi.Models.Speed", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CharacterId")
-                        .HasColumnType("integer")
-                        .HasColumnName("character_id");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("integer")
-                        .HasColumnName("value");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CharacterId")
-                        .IsUnique();
-
-                    b.ToTable("speed");
                 });
 
             modelBuilder.Entity("wwwapi.Models.Style", b =>
@@ -574,230 +388,29 @@ namespace wwwapi.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("wwwapi.Models.Abilities", b =>
+            modelBuilder.Entity("wwwapi.Models.Ability", b =>
                 {
                     b.HasOne("wwwapi.Models.Character", null)
-                        .WithOne("Abilities")
-                        .HasForeignKey("wwwapi.Models.Abilities", "CharacterId")
+                        .WithMany("Abilities")
+                        .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Ability", "Charisma")
-                        .WithMany()
-                        .HasForeignKey("CharismaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Ability", "Constitution")
-                        .WithMany()
-                        .HasForeignKey("ConstitutionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Ability", "Dexterity")
-                        .WithMany()
-                        .HasForeignKey("DexterityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Ability", "Intelligence")
-                        .WithMany()
-                        .HasForeignKey("IntelligenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Ability", "Strength")
-                        .WithMany()
-                        .HasForeignKey("StrengthId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Ability", "Wisdom")
-                        .WithMany()
-                        .HasForeignKey("WisdomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Charisma");
-
-                    b.Navigation("Constitution");
-
-                    b.Navigation("Dexterity");
-
-                    b.Navigation("Intelligence");
-
-                    b.Navigation("Strength");
-
-                    b.Navigation("Wisdom");
                 });
 
-            modelBuilder.Entity("wwwapi.Models.HitPoints", b =>
+            modelBuilder.Entity("wwwapi.Models.Health", b =>
                 {
                     b.HasOne("wwwapi.Models.Character", null)
                         .WithOne("HitPoints")
-                        .HasForeignKey("wwwapi.Models.HitPoints", "characterId")
+                        .HasForeignKey("wwwapi.Models.Health", "CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("wwwapi.Models.Skills", b =>
-                {
-                    b.HasOne("wwwapi.Models.Skill", "Acrobatics")
-                        .WithMany()
-                        .HasForeignKey("AcrobaticsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "AnimalHandling")
-                        .WithMany()
-                        .HasForeignKey("AnimalHandlingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Arcana")
-                        .WithMany()
-                        .HasForeignKey("ArcanaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Athletics")
-                        .WithMany()
-                        .HasForeignKey("AthleticsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Character", null)
-                        .WithOne("Skills")
-                        .HasForeignKey("wwwapi.Models.Skills", "CharacterId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Deception")
-                        .WithMany()
-                        .HasForeignKey("DeceptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "History")
-                        .WithMany()
-                        .HasForeignKey("HistoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Insight")
-                        .WithMany()
-                        .HasForeignKey("InsightId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Intimidation")
-                        .WithMany()
-                        .HasForeignKey("IntimidationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Investigation")
-                        .WithMany()
-                        .HasForeignKey("InvestigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Medicine")
-                        .WithMany()
-                        .HasForeignKey("MedicineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Nature")
-                        .WithMany()
-                        .HasForeignKey("NatureId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Perception")
-                        .WithMany()
-                        .HasForeignKey("PerceptionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Performance")
-                        .WithMany()
-                        .HasForeignKey("PerformanceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Persuation")
-                        .WithMany()
-                        .HasForeignKey("PersuationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Religion")
-                        .WithMany()
-                        .HasForeignKey("ReligionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "SleightOfHand")
-                        .WithMany()
-                        .HasForeignKey("SleightOfHandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Stealth")
-                        .WithMany()
-                        .HasForeignKey("StealthId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("wwwapi.Models.Skill", "Survival")
-                        .WithMany()
-                        .HasForeignKey("SurvivalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Acrobatics");
-
-                    b.Navigation("AnimalHandling");
-
-                    b.Navigation("Arcana");
-
-                    b.Navigation("Athletics");
-
-                    b.Navigation("Deception");
-
-                    b.Navigation("History");
-
-                    b.Navigation("Insight");
-
-                    b.Navigation("Intimidation");
-
-                    b.Navigation("Investigation");
-
-                    b.Navigation("Medicine");
-
-                    b.Navigation("Nature");
-
-                    b.Navigation("Perception");
-
-                    b.Navigation("Performance");
-
-                    b.Navigation("Persuation");
-
-                    b.Navigation("Religion");
-
-                    b.Navigation("SleightOfHand");
-
-                    b.Navigation("Stealth");
-
-                    b.Navigation("Survival");
-                });
-
-            modelBuilder.Entity("wwwapi.Models.Speed", b =>
+            modelBuilder.Entity("wwwapi.Models.Skill", b =>
                 {
                     b.HasOne("wwwapi.Models.Character", null)
-                        .WithOne("Speed")
-                        .HasForeignKey("wwwapi.Models.Speed", "CharacterId")
+                        .WithMany("Skills")
+                        .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -813,17 +426,12 @@ namespace wwwapi.Migrations
 
             modelBuilder.Entity("wwwapi.Models.Character", b =>
                 {
-                    b.Navigation("Abilities")
-                        .IsRequired();
+                    b.Navigation("Abilities");
 
                     b.Navigation("HitPoints")
                         .IsRequired();
 
-                    b.Navigation("Skills")
-                        .IsRequired();
-
-                    b.Navigation("Speed")
-                        .IsRequired();
+                    b.Navigation("Skills");
 
                     b.Navigation("Style")
                         .IsRequired();

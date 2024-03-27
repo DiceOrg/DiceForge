@@ -1,6 +1,6 @@
 ﻿namespace wwwapi.DataTransfer.Models
 {
-    public class HitPointDto
+    public class HealthDto
     {
         public int Current { get; set; }
         public int Max { get; set; }

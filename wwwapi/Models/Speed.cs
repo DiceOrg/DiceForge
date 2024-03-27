@@ -4,7 +4,7 @@ using wwwapi.DataTransfer.Models;
 
 namespace wwwapi.Models
 {
-    [Table("speed")]
+/*    [Table("speed")]
     public class Speed
     {
         [Column("id")]
@@ -15,5 +15,5 @@ namespace wwwapi.Models
         public int CharacterId { get; set; }
 
         public void Update(SpeedDto speedDto) { Value = speedDto.Value; }
-    }
+    }*/
 }

@@ -4,8 +4,8 @@ using wwwapi.DataTransfer.Models;
 
 namespace wwwapi.Models
 {
-    [Table("HitPoints")]
-    public class HitPoints
+    [Table("health")]
+    public class Health
     {
         [Column("id")]
         public int Id { get; set; }
@@ -17,13 +17,13 @@ namespace wwwapi.Models
         public int Temp { get; set; }
 
         [Column("character_id"), ForeignKey("Character"), JsonIgnore]
-        public int characterId { get; set; }
+        public int CharacterId { get; set; }
 
-        public void Update(HitPointDto hitPointDto)
+        public void Update(HealthDto healthDto)
         {
-            Current = hitPointDto.Current;
-            Max = hitPointDto.Max;
-            Temp = hitPointDto.Temp;
+            Current = healthDto.Current;
+            Max = healthDto.Max;
+            Temp = healthDto.Temp;
         }
     }
 }
