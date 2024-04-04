@@ -26,6 +26,8 @@ namespace wwwapi.Endpoints
             // characterGroup.MapPut("/Speed/{id}", UpdateSpeed);
             characterGroup.MapPut("/Style/{id}", UpdateStyle);
 
+            characterGroup.MapPost("{id}/Spells", CreateSpell);
+
             characterGroup.MapDelete("/{id}", DeleteCharacter);
             characterGroup.MapPut("/Hitpoints/{id}", UpdateHitPoints);
 
@@ -49,6 +51,7 @@ namespace wwwapi.Endpoints
         public static async Task<IResult> GetCharacter(IRepository<Character> repository, int id,
             IRepository<Ability> abilityRepository, IRepository<Health> healthRepository,
             IRepository<Skill> skillRepository, IRepository<Style> styleRepository,
+            IRepository<Spell> spellRepository,
             ClaimsPrincipal user
             )
         {
@@ -57,10 +60,12 @@ namespace wwwapi.Endpoints
                 return TypedResults.NotFound("No characters found");
             if (user.UserId() != character.UserId)
                 return TypedResults.Unauthorized();
+
             character.Abilities = abilityRepository.GetByCondition(a => a.CharacterId == id).ToList();
             character.Health = healthRepository.GetByCondition(h => h.CharacterId == id).FirstOrDefault();
             character.Skills = skillRepository.GetByCondition(s => s.CharacterId == id).ToList();
             character.Style = styleRepository.GetByCondition(st => st.CharacterId == id).FirstOrDefault();
+            character.Spells = spellRepository.GetByCondition(sp => sp.CharacterId == id).ToList();
 
             return TypedResults.Ok(character);
         }
@@ -136,20 +141,41 @@ namespace wwwapi.Endpoints
             return TypedResults.Ok(result);
         }
 
-/*        [ProducesResponseType(StatusCodes.Status200OK)]
+        /*        [ProducesResponseType(StatusCodes.Status200OK)]
+                [ProducesResponseType(StatusCodes.Status400BadRequest)]
+                public static async Task<IResult> UpdateSpeed(IRepository<Speed> repository, int id, SpeedDto speedDto)
+                {
+                    Speed speed = await repository.Get(id);
+                    if (speed == null)
+                        return TypedResults.NotFound();
+
+                    speed.Update(speedDto);
+
+                    Speed result = await repository.Update(speed);
+
+                    return TypedResults.Ok(result);
+                }*/
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateSpeed(IRepository<Speed> repository, int id, SpeedDto speedDto)
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public static async Task<IResult> CreateSpell(IRepository<Spell> repository, IRepository<Character> characterRepository, 
+            int id, Spell spell, ClaimsPrincipal user)
         {
-            Speed speed = await repository.Get(id);
-            if (speed == null)
-                return TypedResults.NotFound();
+            Character character = await characterRepository.Get(id);
+            if (character == null || id != character.Id)
+                return TypedResults.BadRequest();
+            if (user.UserId() != character.UserId)
+                return TypedResults.Unauthorized();
+            List<Spell> duplicates = repository.GetByCondition(sp => sp.CharacterId == character.Id).ToList();
+            if (duplicates.Count(sp => sp.Index == spell.Index) > 0) 
+                return TypedResults.BadRequest();
 
-            speed.Update(speedDto);
-
-            Speed result = await repository.Update(speed);
+            spell.CharacterId = character.Id;
+            Spell result = await repository.Create(spell);
 
             return TypedResults.Ok(result);
-        }*/
+        }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

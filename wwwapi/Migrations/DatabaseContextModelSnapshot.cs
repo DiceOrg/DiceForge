@@ -217,6 +217,36 @@ namespace wwwapi.Migrations
                     b.ToTable("skill");
                 });
 
+            modelBuilder.Entity("wwwapi.Models.Spell", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CharacterId")
+                        .HasColumnType("integer")
+                        .HasColumnName("character_id");
+
+                    b.Property<string>("Index")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("index");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CharacterId");
+
+                    b.ToTable("spells");
+                });
+
             modelBuilder.Entity("wwwapi.Models.Style", b =>
                 {
                     b.Property<int>("Id")
@@ -400,7 +430,7 @@ namespace wwwapi.Migrations
             modelBuilder.Entity("wwwapi.Models.Health", b =>
                 {
                     b.HasOne("wwwapi.Models.Character", null)
-                        .WithOne("HitPoints")
+                        .WithOne("Health")
                         .HasForeignKey("wwwapi.Models.Health", "CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -410,6 +440,15 @@ namespace wwwapi.Migrations
                 {
                     b.HasOne("wwwapi.Models.Character", null)
                         .WithMany("Skills")
+                        .HasForeignKey("CharacterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("wwwapi.Models.Spell", b =>
+                {
+                    b.HasOne("wwwapi.Models.Character", null)
+                        .WithMany("Spells")
                         .HasForeignKey("CharacterId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -428,10 +467,12 @@ namespace wwwapi.Migrations
                 {
                     b.Navigation("Abilities");
 
-                    b.Navigation("HitPoints")
+                    b.Navigation("Health")
                         .IsRequired();
 
                     b.Navigation("Skills");
+
+                    b.Navigation("Spells");
 
                     b.Navigation("Style")
                         .IsRequired();

@@ -98,6 +98,7 @@ builder.Services.AddScoped<IRepository<Skill>, Repository<Skill>>();
 // builder.Services.AddScoped<IRepository<Speed>, Repository<Speed>>();
 builder.Services.AddScoped<IRepository<Style>, Repository<Style>>();
 builder.Services.AddScoped<IRepository<Health>, Repository<Health>>();
+builder.Services.AddScoped<IRepository<Spell>, Repository<Spell>>();
 
 builder.Services.AddAuthentication(options =>
 {

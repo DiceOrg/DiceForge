@@ -16,6 +16,7 @@ namespace wwwapi.Models
         public List<Skill> Skills { get; set; }
         public int Speed { get; set; } = 0;
         public Health Health { get; set; }
+        public List<Spell> Spells { get; set; }
         [Column("user_id"), ForeignKey("user"), JsonIgnore]
         public string UserId { get; set; }
     }
