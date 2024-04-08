@@ -1,19 +1,18 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
-using wwwapi.DataTransfer.Models;
 
 namespace wwwapi.Models
 {
-/*    [Table("speed")]
-    public class Speed
+    [Table("spells")]
+    public class Spell
     {
-        [Column("id")]
+        [Column("id"), JsonIgnore]
         public int Id { get; set; }
-        [Column("value")]
-        public int Value { get; set; } = 0;
+        [Column("name")]
+        public string Name { get; set; }
+        [Column("index")]
+        public string Index { get; set; }
         [Column("character_id"), ForeignKey("Character"), JsonIgnore]
         public int CharacterId { get; set; }
-
-        public void Update(SpeedDto speedDto) { Value = speedDto.Value; }
-    }*/
+    }
 }

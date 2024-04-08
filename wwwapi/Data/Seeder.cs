@@ -5,7 +5,7 @@ using wwwapi.Models;
 
 namespace wwwapi.Data
 {
-    public static class Seeder
+    /*public static class Seeder
     {
 
         public static void SeedCharacters(ModelBuilder modelBuilder)
@@ -175,5 +175,5 @@ namespace wwwapi.Data
                 }
             });
         }
-    }
+    }*/
 }

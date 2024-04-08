@@ -11,6 +11,8 @@ namespace wwwapi.Models
     {
         [Column("id")]
         public int Id { get; set; }
+        [Column("name")]
+        public string Name { get; set; }
         [Column("attribute")]
         public AbilitiesEnum Attribute { get; set; }
         [Column("prof")]
@@ -18,9 +20,10 @@ namespace wwwapi.Models
         [Column("exp")]
 
         public bool Exp { get; set; } = false;
+        [Column("character_id"), ForeignKey("Character")]
+        public int CharacterId { get; set; }
 
         public void Update(SkillDto skillDto) { 
-            Attribute = skillDto.Attribute;
             Prof = skillDto.Prof;
             Exp = skillDto.Exp;
         }

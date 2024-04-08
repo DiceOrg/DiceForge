@@ -12,10 +12,11 @@ namespace wwwapi.Models
         [Column("level")]
         public int Level { get; set; }
         public Style Style { get; set; }
-        public Abilities Abilities { get; set; }
-        public Skills Skills { get; set; }
-        public Speed Speed { get; set; }
-        public HitPoints HitPoints { get; set; }
+        public List<Ability> Abilities { get; set; }
+        public List<Skill> Skills { get; set; }
+        public int Speed { get; set; } = 0;
+        public Health Health { get; set; }
+        public List<Spell> Spells { get; set; }
         [Column("user_id"), ForeignKey("user"), JsonIgnore]
         public string UserId { get; set; }
     }
