@@ -15,6 +15,7 @@ namespace wwwapi.DataTransfer.Models
         public string Skin { get; set; } = "";
         public string Race { get; set; } = "";
         public string Class_ { get; set; } = "";
+        public int? Level { get; set; } = null;
         public string Alignment { get; set; } = "";
         public string Background { get; set; } = "";
     }

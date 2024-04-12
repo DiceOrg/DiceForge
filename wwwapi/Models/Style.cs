@@ -27,6 +27,8 @@ namespace wwwapi.Models
         public string Skin { get; set; } = "";
         [Column("race")]
         public string Race { get; set; } = "";
+        [Column("level")]
+        public int? Level { get; set; } = 1;
         [Column("class")]
         public string? Class_ { get; set; } = "";
         [Column("alignment")]
@@ -47,6 +49,7 @@ namespace wwwapi.Models
             Hair = styleDto.Hair;
             Skin = styleDto.Skin;
             Race = styleDto.Race;
+            Level = styleDto.Level;
             Class_ = styleDto.Class_;
             Alignment = styleDto.Alignment;
             Background = styleDto.Background;

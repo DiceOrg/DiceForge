@@ -130,10 +130,6 @@ namespace wwwapi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("Level")
-                        .HasColumnType("integer")
-                        .HasColumnName("level");
-
                     b.Property<int>("Speed")
                         .HasColumnType("integer");
 
@@ -295,6 +291,10 @@ namespace wwwapi.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("height");
+
+                    b.Property<int?>("Level")
+                        .HasColumnType("integer")
+                        .HasColumnName("level");
 
                     b.Property<string>("Name")
                         .IsRequired()

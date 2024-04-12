@@ -9,8 +9,6 @@ namespace wwwapi.Models
     {
         [Column("id")]
         public int Id { get; set; }
-        [Column("level")]
-        public int Level { get; set; }
         public Style Style { get; set; }
         public List<Ability> Abilities { get; set; }
         public List<Skill> Skills { get; set; }

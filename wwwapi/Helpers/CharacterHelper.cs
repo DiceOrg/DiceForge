@@ -15,7 +15,6 @@ namespace wwwapi.Helpers
 
             Character character = await characterRepository.Create(new Character()
             {
-                Level = 1,
                 UserId = userId
             });
 
@@ -55,11 +54,6 @@ namespace wwwapi.Helpers
 
             return abilities;
         }
-
-/*        public static async Task<Speed> toSpeed(IRepository<Speed> repository, int id)
-        {
-            return await repository.Create(new Speed() { CharacterId = id });
-        }*/
 
         public static Dictionary<string, AbilitiesEnum> SkillToAbility = new Dictionary<string, AbilitiesEnum>
         {
@@ -107,46 +101,6 @@ namespace wwwapi.Helpers
             return await repository.Create(new Style() { CharacterId = id, Name = name });;
         }
 
-/*        public static async Task<bool> deleteCharacter(Character character, 
-            IRepository<Ability> abilityRepository,
-            IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
-            IRepository<Style> styleRepository, IRepository<HitPoints> healthRepository){
-
-            Abilities abilities = character.Abilities;
-            Skills skills = character.Skills;
-
-            
-            foreach (string propertyName in SkillToAbility.Keys) {
-                PropertyInfo property = skills.GetType().GetProperty(propertyName);
-
-                await skillRepository.Delete((Skill) property.GetValue(skills));
-            }
-
-            List<string> propertyNames = new List<string>
-            {
-                "Strength", "Dexterity", "Constitution", "Intelligence", "Wisdom", "Charisma"
-            };
-
-            foreach (string propertyName in propertyNames)
-            {
-                PropertyInfo property = abilities.GetType().GetProperty(propertyName);
-
-                await abilityRepository.Delete((Ability) property.GetValue(abilities));
-            }
-
-
-            // This is solved by cascade from auto-include
-*//*            await healthRepository.Delete(character.HitPoints);
-            await speedRepository.Delete(character.Speed);
-            await styleRepository.Delete(character.Style);
-            await abiltiesRepository.Delete(abilities);
-            await skillsRepository.Delete(skills);*//*
-
-            await characterRepository.Delete(character);
-
-
-            return true;
-        }
-*/    }
+    }
 
 }
