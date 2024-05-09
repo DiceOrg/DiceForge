@@ -98,7 +98,7 @@ namespace wwwapi.Helpers
 
         public static async Task<Style> toStyle(IRepository<Style> repository, int id, string name)
         {
-            return await repository.Create(new Style() { CharacterId = id, Name = name });;
+            return await repository.Create(new Style() { CharacterId = id, Name = name });
         }
 
     }

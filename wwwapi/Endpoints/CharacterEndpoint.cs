@@ -20,16 +20,11 @@ namespace wwwapi.Endpoints
 
             characterGroup.MapPost("/", CreateCharacter);
 
-            characterGroup.MapPut("/Ability/{id}", UpdateAbility);
-            // characterGroup.MapPut("/{id}", UpdateCharacter);
-            characterGroup.MapPut("/Skill/{id}", UpdateSkill);
-            // characterGroup.MapPut("/Speed/{id}", UpdateSpeed);
-            characterGroup.MapPut("/Style/{id}", UpdateStyle);
+            characterGroup.MapPut("/{id}", UpdateCharacter);
 
             characterGroup.MapPost("{id}/Spells", CreateSpell);
 
             characterGroup.MapDelete("/{id}", DeleteCharacter);
-            characterGroup.MapPut("/Hitpoints/{id}", UpdateHitPoints);
 
 
         }
@@ -62,9 +57,9 @@ namespace wwwapi.Endpoints
                 return TypedResults.Unauthorized();
 
             character.Abilities = abilityRepository.GetByCondition(a => a.CharacterId == id).ToList();
-            character.Health = healthRepository.GetByCondition(h => h.CharacterId == id).FirstOrDefault();
+            character.Health = healthRepository.GetByCondition(h => h.CharacterId == id).First();
             character.Skills = skillRepository.GetByCondition(s => s.CharacterId == id).ToList();
-            character.Style = styleRepository.GetByCondition(st => st.CharacterId == id).FirstOrDefault();
+            character.Style = styleRepository.GetByCondition(st => st.CharacterId == id).First();
             character.Spells = spellRepository.GetByCondition(sp => sp.CharacterId == id).ToList();
 
             return TypedResults.Ok(character);
@@ -92,22 +87,11 @@ namespace wwwapi.Endpoints
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateAbility(IRepository<Ability> repository, int id, AbilityDto abilityDto)
-        {
-            Ability ability = await repository.Get(id);
-            if (ability == null)
-                return TypedResults.NotFound();
-
-            ability.Update(abilityDto);
-
-            Ability result = await repository.Update(ability);
-
-            return TypedResults.Ok(result);
-        }
-
-/*        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateCharacter(IRepository<Character> repository, int id, 
+        public static async Task<IResult> UpdateCharacter(IRepository<Character> repository,
+            IRepository<Ability> abilityRepository,
+            IRepository<Character> characterRepository, IRepository<Skill> skillRepository,
+            IRepository<Style> styleRepository, IRepository<Health> healthRepository,
+            int id,
             CharacterDto characterDto, ClaimsPrincipal user)
         {
             Character character = await repository.Get(id);
@@ -117,6 +101,11 @@ namespace wwwapi.Endpoints
             if (user.UserId() != character.UserId)
                 return TypedResults.Unauthorized();
 
+            character.Abilities = abilityRepository.GetByCondition(a => a.CharacterId == id).ToList();
+            character.Health = healthRepository.GetByCondition(h => h.CharacterId == id).FirstOrDefault();
+            character.Skills = skillRepository.GetByCondition(s => s.CharacterId == id).ToList();
+            character.Style = styleRepository.GetByCondition(st => st.CharacterId == id).FirstOrDefault();
+
 
 
             character.Update(characterDto);
@@ -124,37 +113,8 @@ namespace wwwapi.Endpoints
             Character result = await repository.Update(character);
 
             return TypedResults.Ok(result);
-        }*/
-
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateSkill(IRepository<Skill> repository, int id, SkillDto skillDto)
-        {
-            Skill skill = await repository.Get(id);
-            if (skill == null ) return 
-                TypedResults.NotFound();
-
-            skill.Update(skillDto);
-
-            Skill result = await repository.Update(skill);
-
-            return TypedResults.Ok(result);
         }
 
-        /*        [ProducesResponseType(StatusCodes.Status200OK)]
-                [ProducesResponseType(StatusCodes.Status400BadRequest)]
-                public static async Task<IResult> UpdateSpeed(IRepository<Speed> repository, int id, SpeedDto speedDto)
-                {
-                    Speed speed = await repository.Get(id);
-                    if (speed == null)
-                        return TypedResults.NotFound();
-
-                    speed.Update(speedDto);
-
-                    Speed result = await repository.Update(speed);
-
-                    return TypedResults.Ok(result);
-                }*/
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -177,20 +137,6 @@ namespace wwwapi.Endpoints
             return TypedResults.Ok(result);
         }
 
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateStyle(IRepository<Style> repository, int id, StyleDto styleDto)
-        {
-            Style style = await repository.Get(id);
-            if (style == null)
-                return TypedResults.NotFound();
-
-            style.Update(styleDto);
-
-            Style result = await repository.Update(style);
-
-            return TypedResults.Ok(result);
-        }
 
         public static async Task<IResult> DeleteCharacter(IRepository<Character> repository, 
             IRepository<Ability> abilityRepository, 
@@ -214,21 +160,6 @@ namespace wwwapi.Endpoints
             await repository.Delete(character);
 
             return TypedResults.Ok(character);
-        }
-
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public static async Task<IResult> UpdateHitPoints(IRepository<Health> repository, int id, HealthDto hitPointDto)
-        {
-            Health hp = await repository.Get(id);
-            if (hp == null)
-                return TypedResults.NotFound();
-
-            hp.Update(hitPointDto);
-
-            Health result = await repository.Update(hp);
-
-            return TypedResults.Ok(result);
         }
     }
 }
