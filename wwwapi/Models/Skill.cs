@@ -23,7 +23,9 @@ namespace wwwapi.Models
         [Column("character_id"), ForeignKey("Character")]
         public int CharacterId { get; set; }
 
-        public void Update(SkillDto skillDto) { 
+        public void Update(SkillDto skillDto) {
+            if (skillDto.Name != Name)
+                throw new ArgumentException("Element does not match element to change");
             Prof = skillDto.Prof;
             Exp = skillDto.Exp;
         }

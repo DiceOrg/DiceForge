@@ -18,6 +18,8 @@ namespace wwwapi.Models
         public int CharacterId { get; set; }
         public void Update(AbilityDto abilityDto)
         {
+            if (abilityDto.Name != Name)
+                throw new ArgumentException("Ability Element does not match the one it should replace.");
             Value = abilityDto.Value;
             Prof = abilityDto.Prof;
         }
